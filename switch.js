@@ -2,11 +2,11 @@
  * switch
  * author: chenlong
  * 使用方法：
- * 
+ *
  * cnd引用:
  * <script src="http://cdn.gezlife.net/common/js/switch-min.js" ></script>
  * <link rel="stylesheet" href="switch.css">
- *     
+ *
  * html: <input class="j-switch" type="checkbox" />
  *
  * js:
@@ -31,120 +31,126 @@
  *          checked: false
  *      });
  */
-;(function($){
-  $.fn.extend({
-    switch:function(arg){
-      var arg = arg || {},
-          defaluts = {beforeChange:null,afterChange:null,change:null};
+;(function($) {
+    $.fn.extend({
+        switch: function(arg) {
+            var arg = arg || {},
+                defaluts = {
+                    beforeChange: null,
+                    afterChange: null,
+                    change: null
+                };
 
-      sets = $.extend(defaluts, arg);
+            sets = $.extend(defaluts, arg);
 
-      this.each(function(index, el) {
-        var arg = $.extend({obj:$(el)}, sets);
-        new Switch(arg).init();
-      });
-    },
+            this.each(function(index, el) {
+                var arg = $.extend({
+                    obj: $(el)
+                }, sets);
+                new Switch(arg).init();
+            });
+        },
 
-    setSwitch:function(arg){
-      this.each(function(index, el) {
-          var currChecked = $(this).prop('checked'),
-              currDisabled = $(this).prop('disabled');
-          var isChecked = arg.checked == undefined ? currChecked : arg.checked,
-              isDisabled = arg.disabled == undefined ? currDisabled : arg.disabled;
+        setSwitch: function(arg) {
+            this.each(function(index, el) {
+                var currChecked = $(this).prop('checked'),
+                    currDisabled = $(this).prop('disabled');
+                var isChecked = arg.checked == undefined ? currChecked : arg.checked,
+                    isDisabled = arg.disabled == undefined ? currDisabled : arg.disabled;
 
-          if( isChecked == currChecked && isDisabled == currDisabled)
-            return;
+                if (isChecked == currChecked && isDisabled == currDisabled)
+                    return;
 
-          if(isChecked == currChecked && isDisabled !== currDisabled){
-            staticFn.setState($(el), isChecked, isDisabled);
-          }else{
-            $(this).parent().trigger('changeEvent',[false,function () {
-              staticFn.setState($(el), isChecked, isDisabled);
-            }]);
-          }
-      });
-    }
-  });
+                if (isChecked == currChecked && isDisabled !== currDisabled) {
+                    staticFn.setState($(el), isChecked, isDisabled);
+                } else {
+                    $(this).parent().trigger('changeEvent', [false, function() {
+                        staticFn.setState($(el), isChecked, isDisabled);
+                    }]);
+                }
+            });
+        }
+    });
 
-  function Switch(config){
-    this.obj = config.obj;
-    this.beforeChange = config.beforeChange;
-    this.afterChange = config.afterChange;
-    this.change = config.change;
-  };
+    function Switch(config) {
+        this.obj = config.obj;
+        this.beforeChange = config.beforeChange;
+        this.afterChange = config.afterChange;
+        this.change = config.change;
+    };
 
-  var staticFn = {
-    setState: function($obj, isChecked, isDisabled){
-      var $parent = $obj.parent(),
-          className = 'switch',
-          checkedClass = isChecked ? ' switch-on' : ' switch-off',
-          disabledClass = isDisabled ? ' disabled' : '',
-          textOn = $obj.attr('text-on') || '启用',
-          textOff = $obj.attr('text-off') || '停用';
+    var staticFn = {
+        setState: function($obj, isChecked, isDisabled) {
+            var $parent = $obj.parent(),
+                className = 'switch',
+                checkedClass = isChecked ? ' switch-on' : ' switch-off',
+                disabledClass = isDisabled ? ' disabled' : '',
+                textOn = $obj.attr('text-on') || '启用',
+                textOff = $obj.attr('text-off') || '停用';
 
-      $obj.prop({
-        checked: isChecked,
-        disabled: isDisabled
-      });
+            $obj.prop({
+                checked: isChecked,
+                disabled: isDisabled
+            });
 
-      $parent[0].className = className + checkedClass + disabledClass;
-      $parent.find('.s-witch:first').html(textOff);
-      $parent.find('.s-witch:last').html(textOn);
-    }
-  };
+            $parent[0].className = className + checkedClass + disabledClass;
+            $parent.find('.s-witch:first').html(textOff);
+            $parent.find('.s-witch:last').html(textOn);
+        }
+    };
 
-  Switch.prototype = {
-    constructor:Switch,
+    Switch.prototype = {
+        constructor: Switch,
 
-    init:function(){
-      var $obj = this.obj,
-          checked = $obj.prop('checked'),
-          disabled = $obj.prop('disabled');
-      this.buildDom();
-      this.setState($obj, checked, disabled);
-      this.events();
-    },
+        init: function() {
+            var $obj = this.obj,
+                checked = $obj.prop('checked'),
+                disabled = $obj.prop('disabled');
+            this.buildDom();
+            this.setState($obj, checked, disabled);
+            this.events();
+        },
 
-    setState: staticFn.setState,
+        setState: staticFn.setState,
 
-    buildDom:function(){
-      var $obj = this.obj;
-      $obj.wrap('<div class="switch"></div>');
-      $obj.before('<div class="switch-slid"></div><span class="s-witch">停用</span>');
-      $obj.after('<span class="s-witch">启用</span>');
-      $obj.hide();
-    },
+        buildDom: function() {
+            var $obj = this.obj;
+            $obj.wrap('<div class="switch"></div>');
+            $obj.before('<div class="switch-slid"></div><span class="s-witch">停用</span>');
+            $obj.after('<span class="s-witch">启用</span>');
+            $obj.hide();
+        },
 
-    events:function(){
-      var _this = this,
-          $obj = this.obj,
-          $parent = $obj.parent();
-      $parent.click(function(){
-        $(this).trigger('changeEvent',[true]);
-      });
+        events: function() {
+            var _this = this,
+                $obj = this.obj,
+                $parent = $obj.parent();
+            $parent.click(function() {
+                $(this).trigger('changeEvent', [true]);
+            });
 
-      $parent.on('changeEvent',function(e, isInitiative, setFn){
-        var $obj = $(this).find(':checkbox'),
-            isChecked = $obj.prop('checked'),
-            isDisabled = $obj.prop('disabled'),
-            changeHandle = function () {
-              if(isInitiative){
-                _this.setState($obj, !isChecked, false);
-              }else{
-                setFn();
-              }
-              if(_this.afterChange !== null){
-                _this.afterChange($obj, !isChecked);
-              }
-              if(_this.change !== null){
-                _this.change($obj, !isChecked);
-              }
-            };
+            $parent.on('changeEvent', function(e, isInitiative, setFn) {
+                var $obj = $(this).find(':checkbox'),
+                    isChecked = $obj.prop('checked'),
+                    isDisabled = $obj.prop('disabled'),
+                    changeHandle = function() {
+                        if (isInitiative) {
+                            _this.setState($obj, !isChecked, false);
+                        } else {
+                            setFn();
+                        }
+                        if (_this.afterChange !== null) {
+                            _this.afterChange($obj, !isChecked);
+                        }
+                        if (_this.change !== null) {
+                            _this.change($obj, !isChecked);
+                        }
+                    };
 
-        if(isDisabled && !!isInitiative) return;
+                if (isDisabled && !!isInitiative) return;
 
-        _this.beforeChange !== null ? _this.beforeChange($obj, isChecked,changeHandle) : changeHandle();
-      });
-    }
-  };
+                _this.beforeChange !== null ? _this.beforeChange($obj, isChecked, changeHandle) : changeHandle();
+            });
+        }
+    };
 })(jQuery);
