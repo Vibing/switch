@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="http://cdn.bootcss.com/jquery/2.0.0/jquery.js"></script>
+    <script src="switch.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="switch.css">
+    <style>
+        body{margin: 50px}
+    </style>
+</head>
+
+<body>
+
+    <input class="ck" type="checkbox"  checked/>
+    <input class="ckk" type="checkbox"  text-on="ON" text-off="OFF"/>
+    <input class="ckk" type="checkbox" disabled />
+
+
+    <button class="button">设置</button>
+</body>
+<script type="text/javascript">
+    $('.ck').eq(0).switch({
+        beforeChange:function (obj, state, next) {
+            console.log('before');
+            setTimeout(next,1000);
+        },
+        afterChange: function(obj, state) {
+            console.log('after');
+        },
+        change: function(obj, state) {
+            console.log('change');
+        }
+    });
+
+    $('.ckk').switch({
+        beforeChange:function (obj, state, next) {
+            console.log('before');
+            next();
+        },
+        afterChange: function(obj, state) {
+            console.log('after');
+        },
+        change: function(obj, state) {
+            console.log('change');
+        }
+    });
+
+    $('.button').click(function() {
+        var s = $('.ck').eq(0).prop('checked');
+        console.log(s);
+
+        $('.ck').eq(0).setSwitch({
+            checked: !s
+        })
+    })
+</script>
+
+</html>
