@@ -44,9 +44,12 @@
             sets = $.extend(defaluts, arg);
 
             this.each(function(index, el) {
+                if($(el).data('_obj_serial_')) return;
                 var arg = $.extend({
                     obj: $(el)
                 }, sets);
+                
+                $(el).data('_obj_serial_',true);
                 new Switch(arg).init();
             });
         },
