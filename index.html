@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Switch by Vibing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Switch</h1>
+      <h2 class="project-tagline">由自己编写的switch开关插件，支持beforeChange、afterChange和change事件。支持设置checked属性和disabled属性</h2>
+      <a href="https://github.com/Vibing/switch" class="btn">View on GitHub</a>
+      <a href="https://github.com/Vibing/switch/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/Vibing/switch/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="switch" class="anchor" href="#switch" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>switch</h1>
+
+<p>由自己编写的switch开关插件，支持beforeChange、afterChange和change事件。支持设置checked属性和disabled属性</p>
+
+<h1>
+<a id="使用" class="anchor" href="#%E4%BD%BF%E7%94%A8" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用</h1>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">link</span> <span class="pl-e">rel</span>=<span class="pl-s"><span class="pl-pds">"</span>stylesheet<span class="pl-pds">"</span></span> <span class="pl-e">href</span>=<span class="pl-s"><span class="pl-pds">"</span>switch.css<span class="pl-pds">"</span></span>&gt;
+&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>switch.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<h2>
+<a id="html" class="anchor" href="#html" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>html</h2>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">input</span> <span class="pl-e">type</span>=<span class="pl-s"><span class="pl-pds">"</span>checkbox<span class="pl-pds">"</span></span> <span class="pl-e">class</span>=<span class="pl-s"><span class="pl-pds">"</span>switchbox<span class="pl-pds">"</span></span> <span class="pl-e">text-on</span>=<span class="pl-s"><span class="pl-pds">"</span>ON<span class="pl-pds">"</span></span> <span class="pl-e">text-off</span>=<span class="pl-s"><span class="pl-pds">"</span>OFF<span class="pl-pds">"</span></span> <span class="pl-e">checked</span> <span class="pl-e">disabled</span> &gt;</pre></div>
+
+<h2>
+<a id="js" class="anchor" href="#js" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>js</h2>
+
+<div class="highlight highlight-source-js"><pre>  <span class="pl-c">//初始化 如果有beforeChange回调，则必须执行next()函数，才会继续执行后面的回调</span>
+  <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>.switchbox<span class="pl-pds">'</span></span>).<span class="pl-en">switch</span>({
+    <span class="pl-en">beforeChange</span><span class="pl-k">:</span><span class="pl-k">function</span>(<span class="pl-smi">obj</span>, <span class="pl-smi">state</span>, <span class="pl-smi">next</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>before<span class="pl-pds">'</span></span>,obj,state);
+        <span class="pl-en">next</span>();
+    },
+    <span class="pl-en">afterChange</span><span class="pl-k">:</span><span class="pl-k">function</span>(<span class="pl-smi">obj</span>, <span class="pl-smi">state</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>after<span class="pl-pds">'</span></span>,obj,state);
+    },
+    <span class="pl-en">change</span><span class="pl-k">:</span><span class="pl-k">function</span>(<span class="pl-smi">obj</span>, <span class="pl-smi">state</span>){
+        <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>change<span class="pl-pds">'</span></span>,obj,state);
+    }
+  });
+
+  <span class="pl-c">//当checked状态改变时，仍会触发之前配置的beforeChange、afterChange和change</span>
+  <span class="pl-en">$</span>(<span class="pl-s"><span class="pl-pds">'</span>.switchbox<span class="pl-pds">'</span></span>).<span class="pl-en">setSwitch</span>({
+    checked<span class="pl-k">:</span> <span class="pl-c1">false</span>,
+    disabled<span class="pl-k">:</span> <span class="pl-c1">true</span>
+  });</pre></div>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/Vibing/switch">Switch</a> is maintained by <a href="https://github.com/Vibing">Vibing</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
