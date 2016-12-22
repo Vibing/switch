@@ -25,8 +25,9 @@
  *          }
  *      });
  *
- *      //注意，当checked属性发生改变时，仍然会触发beforeChange、afterChange和change回调
+ *      //注意，当checked属性发生改变时，默认仍然会触发beforeChange、afterChange和change回调
  *      $('.j-switch').setSwitch({
+ *          trigger: true,  //true: 改变时仍然触发beforeChange、agterChange、change回调 false：不触发回调
  *          disabled: true,
  *          checked: false
  *      });
@@ -66,7 +67,7 @@
 
                 if (isChecked == currChecked && isDisabled !== currDisabled) {
                     staticFn.setState($(el), isChecked, isDisabled);
-                } else {
+                } else if( arg.trigger === true || arg.trigger == undefined ){
                     $(this).parent().trigger('changeEvent', [false, function() {
                         staticFn.setState($(el), isChecked, isDisabled);
                     }]);
