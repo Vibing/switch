@@ -15,28 +15,15 @@
 </head>
 
 <body>
-
-    <input class="ck" type="checkbox"  checked/>
+    
     <input class="ckk" type="checkbox"  text-on="ON" text-off="OFF"/>
+    <input class="ck" type="checkbox"  checked/>
     <input class="ckk" type="checkbox" disabled />
 
 
     <p><button class="button">状态设置</button></p>
 </body>
 <script type="text/javascript">
-    $('.ck').switch({
-        beforeChange:function (obj, state, next) {
-            console.log('before');
-            setTimeout(next,1000);
-        },
-        afterChange: function(obj, state) {
-            console.log('after');
-        },
-        change: function(obj, state) {
-            console.log('change');
-        }
-    });
-
     $('.ckk').switch({
         beforeChange:function (obj, state, next) {
             console.log('before');
@@ -49,10 +36,23 @@
             console.log('change');
         }
     });
-
+    
+    $('.ck').switch({
+        beforeChange:function (obj, state, next) {
+            console.log('before');
+            setTimeout(next,1000);
+        },
+        afterChange: function(obj, state) {
+            console.log('after');
+        },
+        change: function(obj, state) {
+            console.log('change');
+        }
+    });
+    
     $('.button').click(function() {
-        var s = $('.ck').eq(0).prop('checked');
-        $('.ck').eq(0).setSwitch({
+        var s = $('.ckk').eq(0).prop('checked');
+        $('.ckk').eq(0).setSwitch({
             checked: !s
         })
     })
