@@ -30,9 +30,10 @@
     }
   });
   
-  //当checked状态改变时，仍会触发之前配置的beforeChange、afterChange和change
-  $('.switchbox').setSwitch({
-    checked: false,
+  //当checked状态改变时，默认会触发之前配置的beforeChange、afterChange和change回调函数
+  $('.switchbox').setSwitch({
+    trigger: true,  // false：不触发回调, 默认为true
+    checked: false,
     disabled: true
   });
 ```
