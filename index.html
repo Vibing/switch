@@ -21,10 +21,10 @@
     <input class="ckk" type="checkbox" disabled />
 
 
-    <button class="button">设置</button>
+    <p><button class="button">状态设置</button></p>
 </body>
 <script type="text/javascript">
-    $('.ck').eq(0).switch({
+    $('.ck').switch({
         beforeChange:function (obj, state, next) {
             console.log('before');
             setTimeout(next,1000);
@@ -52,8 +52,6 @@
 
     $('.button').click(function() {
         var s = $('.ck').eq(0).prop('checked');
-        console.log(s);
-
         $('.ck').eq(0).setSwitch({
             checked: !s
         })
